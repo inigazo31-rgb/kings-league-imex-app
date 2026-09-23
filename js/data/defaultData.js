@@ -562,14 +562,95 @@ export const DEFAULT_DRAFT_STATE = {
 };
 
 export const DEFAULT_USERS = [
-  { id: "u-admin", username: "organizador", name: "Prof. Alejandro Valdés (Organizador)", role: "ADMIN", teamId: null, avatar: "👑" },
-  { id: "u-cuervos", username: "cuervos_presi", name: "Mateo Ramos (Pres. Los Cuervos)", role: "PRESIDENT", teamId: "team-1", avatar: "🦅" },
-  { id: "u-titanes", username: "titanes_presi", name: "Diego Álvarez (Pres. Titanes)", role: "PRESIDENT", teamId: "team-2", avatar: "⚡" },
-  { id: "u-rayo", username: "rayo_presi", name: "Sofía Morales (Pres. Rayo Imperial)", role: "PRESIDENT", teamId: "team-3", avatar: "👑" },
-  { id: "u-furia", username: "furia_presi", name: "Lucas Hernández (Pres. Furia Azteca)", role: "PRESIDENT", teamId: "team-4", avatar: "🔥" },
-  { id: "u-galacticos", username: "galacticos_presi", name: "Sebastián Cruz (Pres. Galácticos IMEX)", role: "PRESIDENT", teamId: "team-5", avatar: "✨" },
-  { id: "u-vikingos", username: "vikingos_presi", name: "Camila Navarro (Pres. Vikingos FC)", role: "PRESIDENT", teamId: "team-6", avatar: "🛡️" },
-  { id: "u-dragones", username: "dragones_presi", name: "Emilio Romero (Pres. Dragones Negros)", role: "PRESIDENT", teamId: "team-7", avatar: "🐉" },
-  { id: "u-halcones", username: "halcones_presi", name: "Valeria Ortiz (Pres. Halcones Dorados)", role: "PRESIDENT", teamId: "team-8", avatar: "🦅" },
-  { id: "u-jugador", username: "carlos_mendoza", name: "Carlos Mendoza (Insignia Cuervos)", role: "PLAYER", playerId: "p-101", teamId: "team-1", avatar: "⭐" }
+  {
+    id: "u-admin",
+    username: "organizador",
+    password: "admin123",
+    name: "SENIORS",
+    role: "ADMIN",
+    teamId: null,
+    avatar: "👑"
+  },
+  {
+    id: "u-cuervos",
+    username: "cuervos_presi",
+    password: "cuervos123",
+    name: "Mateo Ramos (Pres. Los Cuervos)",
+    role: "PRESIDENT",
+    teamId: "team-1",
+    avatar: "🦅"
+  },
+  {
+    id: "u-titanes",
+    username: "titanes_presi",
+    password: "titanes123",
+    name: "Diego Álvarez (Pres. Titanes)",
+    role: "PRESIDENT",
+    teamId: "team-2",
+    avatar: "⚡"
+  },
+  {
+    id: "u-rayo",
+    username: "rayo_presi",
+    password: "rayo123",
+    name: "Sofía Morales (Pres. Rayo Imperial)",
+    role: "PRESIDENT",
+    teamId: "team-3",
+    avatar: "👑"
+  },
+  {
+    id: "u-furia",
+    username: "furia_presi",
+    password: "furia123",
+    name: "Lucas Hernández (Pres. Furia Azteca)",
+    role: "PRESIDENT",
+    teamId: "team-4",
+    avatar: "🔥"
+  },
+  {
+    id: "u-galacticos",
+    username: "galacticos_presi",
+    password: "galacticos123",
+    name: "Sebastián Cruz (Pres. Galácticos IMEX)",
+    role: "PRESIDENT",
+    teamId: "team-5",
+    avatar: "✨"
+  },
+  {
+    id: "u-vikingos",
+    username: "vikingos_presi",
+    password: "vikingos123",
+    name: "Camila Navarro (Pres. Vikingos FC)",
+    role: "PRESIDENT",
+    teamId: "team-6",
+    avatar: "🛡️"
+  },
+  {
+    id: "u-dragones",
+    username: "dragones_presi",
+    password: "dragones123",
+    name: "Emilio Romero (Pres. Dragones Negros)",
+    role: "PRESIDENT",
+    teamId: "team-7",
+    avatar: "🐉"
+  },
+  {
+    id: "u-halcones",
+    username: "halcones_presi",
+    password: "halcones123",
+    name: "Valeria Ortiz (Pres. Halcones Dorados)",
+    role: "PRESIDENT",
+    teamId: "team-8",
+    avatar: "🦅"
+  },
+  {
+    id: "u-jugador",
+    username: "carlos_mendoza",
+    password: "carlos123",
+    name: "Carlos Mendoza (Insignia Cuervos)",
+    role: "PLAYER",
+    playerId: "p-101",
+    teamId: "team-1",
+    avatar: "⭐"
+  }
 ];

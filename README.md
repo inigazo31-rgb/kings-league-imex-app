@@ -11,7 +11,7 @@ Simplemente haz **doble clic en el archivo:**
 ```
 iniciar-servidor.bat
 ```
-Esto levantará el servidor web nativo de PowerShell en **`http://localhost:8080`** y abrirá automáticamente tu navegador preferido.
+Esto levantará la plataforma en **`http://localhost:8081`** y abrirá automáticamente tu navegador preferido.
 
 Si Node.js está instalado, el mismo archivo inicia el backend central (`server.js`), que guarda el estado compartido en `data/state.json` y autentica las sesiones. Para el lanzamiento real, instala Node.js LTS en el equipo que actuará como servidor y comparte la URL de ese equipo en la red local.
 
@@ -135,12 +135,12 @@ Todos los datos están centralizados de manera modular:
 El proyecto incluye un servidor Node sin dependencias externas:
 
 ```powershell
-npm start
+npm.cmd start
 ```
 
 ### Configurar usuarios y contraseñas
 
-Antes del primer `npm start`, puedes definir tus propias contraseñas en PowerShell. Los nombres de usuario ya están creados para el organizador y los ocho presidentes:
+Antes del primer `npm.cmd start`, puedes definir tus propias contraseñas en PowerShell. Los nombres de usuario ya están creados para el organizador y los ocho presidentes:
 
 ```powershell
 $env:IMEX_PASSWORD_ORGANIZADOR = "UnaClaveLargaYUnica"
@@ -152,10 +152,10 @@ $env:IMEX_PASSWORD_GALACTICOS_PRESI = "ClaveGalacticos"
 $env:IMEX_PASSWORD_VIKINGOS_PRESI = "ClaveVikingos"
 $env:IMEX_PASSWORD_DRAGONES_PRESI = "ClaveDragones"
 $env:IMEX_PASSWORD_HALCONES_PRESI = "ClaveHalcones"
-npm start
+npm.cmd start
 ```
 
-Las contraseñas solo se leen al crear `data/state.json`. Si el servidor ya se inició y necesitas cambiarlas, detén el servidor, haz una copia de `data/state.json`, elimina ese archivo, vuelve a definir las variables y ejecuta `npm start` otra vez. Esto reinicia los datos del torneo, así que hazlo solo antes de comenzar la competición o después de exportar un respaldo.
+Las contraseñas solo se leen al crear `data/state.json`. Si el servidor ya se inició y necesitas cambiarlas, detén el servidor, haz una copia de `data/state.json`, elimina ese archivo, vuelve a definir las variables y ejecuta `npm.cmd start` otra vez. Esto reinicia los datos del torneo, así que hazlo solo antes de comenzar la competición o después de exportar un respaldo.
 
 Si no defines variables, el servidor genera contraseñas aleatorias y las muestra una sola vez en la terminal al arrancar. Guarda esas credenciales de forma privada.
 

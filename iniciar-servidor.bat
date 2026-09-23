@@ -3,7 +3,7 @@ title KINGS LEAGUE IMEX - SERVIDOR LOCAL
 echo ========================================================
 echo   INICIANDO PLATAFORMA OFICIAL KINGS LEAGUE IMEX
 echo ========================================================
-echo Iniciando plataforma en http://localhost:8080...
+echo Iniciando plataforma en http://localhost:8081...
 where node >nul 2>&1
 if %errorlevel%==0 (
 	echo Backend central activado (Node.js)

@@ -19,7 +19,7 @@ import {
 } from "./js/data/defaultData.js";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
-const port = Number(process.env.PORT || 8080);
+const port = Number(process.env.PORT || 8081);
 const statePath = join(root, "data", "state.json");
 const sessions = new Map();
 const loginAttempts = new Map();

@@ -101,8 +101,10 @@ async hydrateFromServer() {
       ? remote.notifications
       : this.notifications;
 
-    this.users = this.mergeDefaultUsers(remote.users);
-
+   this.users = this.mergeDefaultUsers(
+  Array.isArray(remote.users) ? remote.users : DEFAULT_USERS
+);
+    
     this.recalculateAllSquadValues();
     this.normalizeCompetitionState();
 

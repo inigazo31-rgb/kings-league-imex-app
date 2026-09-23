@@ -335,46 +335,48 @@ async hydrateFromServer() {
   }
 
  async authenticateUser({ username, password, role, teamId = null }) {
-  if (!username || !password) return null;
+  console.log("=== INTENTO DE LOGIN ===");
+  console.log("Usuario escrito:", username);
+  console.log("Rol solicitado:", role);
+  console.log("Usuarios disponibles:", this.users);
+
+  if (!username || !password) {
+    console.log("Falta usuario o contraseña.");
+    return null;
+  }
 
   const normalizedUsername = username.trim().toLowerCase();
   const normalizedPassword = String(password).trim();
 
   const match = this.users.find((u) => {
-    if (u.username?.trim().toLowerCase() !== normalizedUsername) {
-      return false;
-    }
+    console.log("Revisando usuario:", u.username, "rol:", u.role);
 
-    if (String(u.password ?? "").trim() !== normalizedPassword) {
-      return false;
-    }
+    const usernameOk =
+      u.username?.trim().toLowerCase() === normalizedUsername;
 
-    if (role && u.role !== role) {
-      return false;
-    }
+    const passwordOk =
+      String(u.password ?? "").trim() === normalizedPassword;
 
-    if (teamId && u.teamId && u.teamId !== teamId) {
-      return false;
-    }
+    const roleOk =
+      !role || u.role === role;
 
-    return true;
+    const teamOk =
+      !teamId || !u.teamId || u.teamId === teamId;
+
+    console.log({
+      usernameOk,
+      passwordOk,
+      roleOk,
+      teamOk
+    });
+
+    return usernameOk && passwordOk && roleOk && teamOk;
   });
+
+  console.log("RESULTADO LOGIN:", match);
 
   return match || null;
 }
-    const normalizedUsername = username.trim().toLowerCase();
-    const normalizedPassword = String(password).trim();
-
-    const match = this.users.find((u) => {
-      if (u.username?.toLowerCase() !== normalizedUsername) return false;
-      if (u.password !== normalizedPassword) return false;
-      if (role && u.role !== role) return false;
-      if (teamId && u.teamId && u.teamId !== teamId) return false;
-      return true;
-    });
-
-    return match || null;
-  }
 
   switchRole(roleType, targetId = null, userData = null) {
     if (roleType === "ADMIN") {

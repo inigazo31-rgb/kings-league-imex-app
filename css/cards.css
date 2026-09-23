@@ -1,0 +1,543 @@
+/* ==========================================================================
+   KINGS LEAGUE IMEX - TARJETAS DEPORTIVAS & CARDS COLECCIONABLES
+   ========================================================================== */
+
+/* --- TARJETA DE JUGADOR (COLLECTIBLE SPORTS CARD) --- */
+.player-card {
+  position: relative;
+  background: linear-gradient(160deg, #131926 0%, #0B0E14 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  clip-path: var(--clip-chamfer);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-bounce);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--border-strong);
+  transition: background var(--transition-fast);
+}
+
+.player-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Variante Insignia ⭐: Resplandor Dorado */
+.player-card.is-insignia {
+  border-color: rgba(255, 215, 0, 0.45);
+  background: linear-gradient(160deg, #1C190D 0%, #0F0E0B 60%, #151105 100%);
+}
+
+.player-card.is-insignia::before {
+  background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+.player-card.is-insignia:hover {
+  border-color: #FFD700;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.25), 0 0 20px rgba(0,0,0,0.9);
+}
+
+.player-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.85rem;
+}
+
+.player-pos-badge {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-xs);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.pos-por { color: #38BDF8; border-color: rgba(56, 189, 248, 0.4); }
+.pos-def { color: #22C55E; border-color: rgba(34, 197, 94, 0.4); }
+.pos-med { color: #F59E0B; border-color: rgba(245, 158, 11, 0.4); }
+.pos-del { color: #FF2E4D; border-color: rgba(255, 46, 77, 0.4); }
+
+.player-insignia-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 165, 0, 0.15));
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+/* Área Visual de la Foto / Silueta y Dorsal Gigante */
+.player-visual {
+  position: relative;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  border-radius: var(--radius-sm);
+}
+
+.player-big-number {
+  position: absolute;
+  right: 0.5rem;
+  bottom: -0.5rem;
+  font-family: var(--font-display);
+  font-size: 6.5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.player-avatar-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1C2333, #0E121A);
+  border: 2px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  position: relative;
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast);
+}
+
+.player-card:hover .player-avatar-circle {
+  transform: scale(1.05);
+}
+
+.player-card.is-insignia .player-avatar-circle {
+  border-color: #FFD700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
+}
+
+/* Nombre e Info del Jugador */
+.player-info {
+  margin-bottom: 0.85rem;
+  position: relative;
+  z-index: 2;
+}
+
+.player-team-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.player-name {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Barra de Cláusula / Valor Económico */
+.player-value-strip {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.player-value-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.player-value-amount {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-lime);
+  letter-spacing: 0.5px;
+}
+
+/* Estadísticas de la Card */
+.player-card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  text-align: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.75rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-val {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.stat-lbl {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* --- TARJETA DE EQUIPO (TEAM CARD) --- */
+.team-card {
+  background: linear-gradient(160deg, #121722 0%, #090B10 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  clip-path: var(--clip-chamfer);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.team-card-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+}
+
+.team-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.team-logo-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-medium);
+}
+
+.team-meta-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.team-card-presi {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.team-card-presi strong {
+  color: var(--text-secondary);
+}
+
+.team-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.team-stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.team-stat-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* --- TARJETA DE PARTIDO (SCOREBOARD MATCH CARD) --- */
+.match-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  clip-path: var(--clip-chamfer);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.match-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-md);
+}
+
+.match-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.65rem;
+}
+
+.match-matchday-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-yellow);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.match-venue {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.match-scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.match-team {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.match-team.away {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.match-team-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.match-team-name {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.match-score-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+}
+
+.match-score-display {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.match-vs-display {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-lime);
+  letter-spacing: 2px;
+}
+
+.match-status-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.match-card-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+}
+
+.match-special-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.event-chip {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.event-chip.card-event {
+  color: var(--color-yellow);
+  border-color: rgba(255, 230, 0, 0.3);
+}
+
+.event-chip.dice-event {
+  color: var(--color-cyan);
+  border-color: rgba(0, 229, 255, 0.3);
+}
+
+/* --- TARJETA DE REGLAS / CARTAS KINGS LEAGUE --- */
+.kings-card {
+  background: linear-gradient(160deg, #161D2B 0%, #0A0D14 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  clip-path: var(--clip-chamfer);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-bounce);
+}
+
+.kings-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.kings-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.kings-card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.kings-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
+}
+
+.kings-card-timing {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-yellow);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.kings-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.kings-card-meta {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+}

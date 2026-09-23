@@ -1,0 +1,175 @@
+/* ==========================================================================
+   KINGS LEAGUE IMEX - RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================================== */
+
+/* --- TABLETS & PANTALLAS MEDIANAS (<= 1024px) --- */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .hero-title {
+    font-size: 3.2rem;
+  }
+
+  .scorers-podium {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .podium-card.rank-1 {
+    order: -1;
+    transform: none;
+  }
+
+  .app-view-container {
+    padding: 1.5rem;
+  }
+}
+
+/* --- MÓVILES Y PANTALLAS PEQUEÑAS (<= 768px) --- */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+    --sidebar-width: 0px;
+  }
+
+  /* Sidebar pasa a ser menú desplegable lateral */
+  .app-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.9);
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .header-brand-mobile {
+    display: block;
+  }
+
+  .generation-logo-slot .gen-logo-text {
+    display: none; /* Mantener solo el icono en móvil */
+  }
+
+  .season-badge {
+    display: none; /* Ahorrar espacio en header móvil */
+  }
+
+  /* Main se ajusta a pantalla completa */
+  .app-main {
+    margin-left: 0;
+    padding-bottom: calc(var(--mobile-nav-height) + 1.5rem);
+  }
+
+  .app-header {
+    padding: 0 1rem;
+  }
+
+  .app-view-container {
+    padding: 1rem;
+  }
+
+  /* Bottom Nav Móvil visible */
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Hero Banner en Móvil */
+  .hero-banner {
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  /* Scoreboards y Partidos */
+  .featured-match-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .featured-team-block, .featured-team-block.away {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .match-scoreboard {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .match-team, .match-team.away {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .match-score-center {
+    order: -1;
+  }
+
+  /* Grids de 1 columna */
+  .matches-grid-2col,
+  .admin-grid-2col,
+  .groups-bracket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Dropdown de Notificaciones */
+  .notif-dropdown {
+    width: calc(100vw - 2rem);
+    right: -70px;
+  }
+
+  /* Modales en móvil */
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .modal-box {
+    max-height: 95vh;
+  }
+}
+
+/* --- TELÉFONOS MUY PEQUEÑOS (<= 480px) --- */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .countdown-digits {
+    font-size: 1.3rem;
+  }
+
+  .countdown-box {
+    min-width: 46px;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .player-card {
+    padding: 1rem;
+  }
+
+  .btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.8rem;
+  }
+}

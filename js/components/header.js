@@ -345,6 +345,10 @@ export function openRoleSwitcherModal() {
   });
 
   document.getElementById("switchRoleAdmin")?.addEventListener("click", async () => {
+    if (window.location.protocol === "file:") {
+      toast.show("Servidor requerido", "Abre http://localhost:8081 para iniciar sesión como organizador.", "yellow");
+      return;
+    }
     const username = document.getElementById("inputAdminUsername")?.value || "";
     const password = document.getElementById("inputAdminPassword")?.value || "";
     const user = await store.authenticateUser({ username, password, role: "ADMIN" });
@@ -366,6 +370,10 @@ export function openRoleSwitcherModal() {
   });
 
   document.getElementById("btnConfirmPresiRole")?.addEventListener("click", async () => {
+    if (window.location.protocol === "file:") {
+      toast.show("Servidor requerido", "Abre http://localhost:8081 para iniciar sesión como presidente.", "yellow");
+      return;
+    }
     const teamId = document.getElementById("selectPresiTeam").value;
     const username = document.getElementById("inputPresiUsername")?.value || "";
     const password = document.getElementById("inputPresiPassword")?.value || "";

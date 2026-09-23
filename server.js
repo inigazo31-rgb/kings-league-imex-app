@@ -23,7 +23,10 @@ const port = Number(process.env.PORT || 8080);
 const statePath = join(root, "data", "state.json");
 const sessions = new Map();
 const loginAttempts = new Map();
-const initialPasswords = Object.fromEntries(DEFAULT_USERS.map((user) => [user.username, randomBytes(12).toString("base64url")]));
+const initialPasswords = Object.fromEntries(DEFAULT_USERS.map((user) => [
+  user.username,
+  process.env[`IMEX_PASSWORD_${user.username.toUpperCase()}`] || randomBytes(12).toString("base64url"),
+]));
 mkdirSync(join(root, "data"), { recursive: true });
 
 const clone = (value) => JSON.parse(JSON.stringify(value));

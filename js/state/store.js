@@ -334,23 +334,34 @@ async hydrateFromServer() {
     }
   }
 
-  async authenticateUser({ username, password, role, teamId = null }) {
-    if (!username || !password) return null;
+ async authenticateUser({ username, password, role, teamId = null }) {
+  if (!username || !password) return null;
 
-    if (this.apiEnabled) {
-      try {
-        const response = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password, role, teamId }) });
-        if (!response.ok) return null;
-        const result = await response.json();
-        this.apiToken = result.token;
-        sessionStorage.setItem("KINGS_LEAGUE_IMEX_TOKEN", result.token);
-        sessionStorage.setItem("KINGS_LEAGUE_IMEX_USER", JSON.stringify(result.user));
-        return result.user;
-      } catch {
-        // El modo local queda disponible para abrir la aplicación sin servidor.
-      }
+  const normalizedUsername = username.trim().toLowerCase();
+  const normalizedPassword = String(password).trim();
+
+  const match = this.users.find((u) => {
+    if (u.username?.trim().toLowerCase() !== normalizedUsername) {
+      return false;
     }
 
+    if (String(u.password ?? "").trim() !== normalizedPassword) {
+      return false;
+    }
+
+    if (role && u.role !== role) {
+      return false;
+    }
+
+    if (teamId && u.teamId && u.teamId !== teamId) {
+      return false;
+    }
+
+    return true;
+  });
+
+  return match || null;
+}
     const normalizedUsername = username.trim().toLowerCase();
     const normalizedPassword = String(password).trim();
 

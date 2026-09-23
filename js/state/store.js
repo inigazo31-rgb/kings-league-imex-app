@@ -114,18 +114,47 @@ async hydrateFromServer() {
   }
 }
 
-  async syncToServer() {
-    if (!this.apiEnabled || !this.apiToken) return;
-    try {
-      await fetch("/api/state", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.apiToken}` },
-        body: JSON.stringify({ league: this.league, teams: this.teams, players: this.players, matches: this.matches, market: this.market, finances: this.finances, rulesCards: this.rulesCards, diceRules: this.diceRules, announcements: this.announcements, auctionPlayers: this.auctionPlayers, draft: this.draft, notifications: this.notifications }),
-      });
-    } catch (error) {
-      console.warn("No se pudo sincronizar con el servidor:", error);
+ async syncToServer() {
+  try {
+    const payload = {
+      league: this.league,
+      teams: this.teams,
+      players: this.players,
+      matches: this.matches,
+      market: this.market,
+      finances: this.finances,
+      rulesCards: this.rulesCards,
+      diceRules: this.diceRules,
+      announcements: this.announcements,
+      auctionPlayers: this.auctionPlayers,
+      draft: this.draft,
+      users: this.users,
+      notifications: this.notifications,
+    };
+
+    const { error } = await supabase
+      .from("app_state")
+      .upsert(
+        {
+          id: "main",
+          payload,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          onConflict: "id",
+        }
+      );
+
+    if (error) {
+      console.error("Error sincronizando con Supabase:", error);
+      return;
     }
+
+    console.log("Estado sincronizado con Supabase.");
+  } catch (error) {
+    console.error("No se pudo sincronizar con Supabase:", error);
   }
+}
 
   refreshSharedState() {
     const saved = this.safeReadStorage();

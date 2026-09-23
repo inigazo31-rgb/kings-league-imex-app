@@ -50,31 +50,69 @@ class Store {
     }
   }
 
-  async hydrateFromServer() {
-    try {
-      const response = await fetch("/api/state", { cache: "no-store" });
-      if (!response.ok) return;
-      const remote = await response.json();
-      this.league = remote.league || this.league;
-      this.teams = Array.isArray(remote.teams) ? remote.teams : this.teams;
-      this.players = Array.isArray(remote.players) ? remote.players : this.players;
-      this.matches = Array.isArray(remote.matches) ? remote.matches : this.matches;
-      this.market = remote.market || this.market;
-      this.finances = Array.isArray(remote.finances) ? remote.finances : this.finances;
-      this.rulesCards = Array.isArray(remote.rulesCards) ? remote.rulesCards : this.rulesCards;
-      this.diceRules = Array.isArray(remote.diceRules) ? remote.diceRules : this.diceRules;
-      this.announcements = Array.isArray(remote.announcements) ? remote.announcements : this.announcements;
-      this.auctionPlayers = Array.isArray(remote.auctionPlayers) ? remote.auctionPlayers : this.auctionPlayers;
-      this.draft = remote.draft || this.draft;
-      this.notifications = Array.isArray(remote.notifications) ? remote.notifications : this.notifications;
-      this.users = this.mergeDefaultUsers(remote.users);
-      this.recalculateAllSquadValues();
-      this.normalizeCompetitionState();
-      this.notify();
-    } catch (error) {
-      console.warn("API no disponible; se mantiene la copia local:", error);
+async hydrateFromServer() {
+  try {
+    const { data, error } = await supabase
+      .from("app_state")
+      .select("payload")
+      .eq("id", "main")
+      .maybeSingle();
+
+    if (error) {
+      console.warn("Supabase no disponible:", error);
+      return;
     }
+
+    if (!data?.payload) {
+      console.log("No existe estado remoto todavía.");
+      return;
+    }
+
+    const remote = data.payload;
+
+    this.league = remote.league || this.league;
+    this.teams = Array.isArray(remote.teams) ? remote.teams : this.teams;
+    this.players = Array.isArray(remote.players) ? remote.players : this.players;
+    this.matches = Array.isArray(remote.matches) ? remote.matches : this.matches;
+    this.market = remote.market || this.market;
+    this.finances = Array.isArray(remote.finances)
+      ? remote.finances
+      : this.finances;
+
+    this.rulesCards = Array.isArray(remote.rulesCards)
+      ? remote.rulesCards
+      : this.rulesCards;
+
+    this.diceRules = Array.isArray(remote.diceRules)
+      ? remote.diceRules
+      : this.diceRules;
+
+    this.announcements = Array.isArray(remote.announcements)
+      ? remote.announcements
+      : this.announcements;
+
+    this.auctionPlayers = Array.isArray(remote.auctionPlayers)
+      ? remote.auctionPlayers
+      : this.auctionPlayers;
+
+    this.draft = remote.draft || this.draft;
+
+    this.notifications = Array.isArray(remote.notifications)
+      ? remote.notifications
+      : this.notifications;
+
+    this.users = this.mergeDefaultUsers(remote.users);
+
+    this.recalculateAllSquadValues();
+    this.normalizeCompetitionState();
+
+    this.notify();
+
+    console.log("Estado cargado desde Supabase.");
+  } catch (error) {
+    console.warn("Error cargando Supabase:", error);
   }
+}
 
   async syncToServer() {
     if (!this.apiEnabled || !this.apiToken) return;

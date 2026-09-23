@@ -16,6 +16,8 @@ import {
   DEFAULT_DRAFT_STATE,
   DEFAULT_USERS,
 } from "../data/defaultData.js";
+
+import { supabase } from "../supabase.js";
 import { safeInteger, sanitizeColor, sanitizePosition, sanitizeText, sanitizeUrl } from "../utils/sanitize.js";
 
 const STORAGE_KEY = "KINGS_LEAGUE_IMEX_STATE_V1";

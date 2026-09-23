@@ -167,3 +167,16 @@ Los presidentes entran seleccionando su equipo y usando su usuario correspondien
 - `GET /api/health`: comprobación de disponibilidad.
 
 El frontend usa la API cuando se abre desde `http://` y conserva una copia local únicamente como respaldo de emergencia. El archivo `data/state.json` se crea al arrancar y está excluido del repositorio. Para una publicación en internet, coloca el servidor detrás de HTTPS y añade una base de datos gestionada; este backend local está pensado para una red interna de la prepa.
+
+## 🌐 6. Publicar en internet
+
+El archivo `render.yaml` deja preparado el despliegue del frontend y backend como un único servicio. Para publicarlo:
+
+1. Entra en [render.com](https://render.com) y crea una cuenta usando GitHub.
+2. Pulsa **New +** y selecciona **Blueprint**.
+3. Elige el repositorio `inigazo31-rgb/kings-league-imex-app`.
+4. Render leerá `render.yaml` y creará el servicio.
+5. Define las variables `IMEX_PASSWORD_...` cuando Render las solicite.
+6. Pulsa **Apply** y espera a que termine el despliegue.
+
+Render entregará una URL como `https://kings-league-imex.onrender.com`. Esa será la dirección pública para organizador, presidentes y visitantes. El servicio usa un disco persistente para conservar `data/state.json`; no publiques ese archivo ni las contraseñas.

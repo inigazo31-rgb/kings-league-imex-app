@@ -2,16 +2,16 @@ services:
   - type: web
     name: kings-league-imex
     runtime: node
-    plan: starter
+    plan: free
     region: frankfurt
     buildCommand: npm install
     startCommand: node server.js
     healthCheckPath: /api/health
-    disk:
-      name: tournament-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
     envVars:
+      - key: SUPABASE_URL
+        value: https://ueivjiimojvxxykflpbh.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
       - key: IMEX_PASSWORD_ORGANIZADOR
         sync: false
       - key: IMEX_PASSWORD_CUERVOS_PRESI

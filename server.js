@@ -21,6 +21,9 @@ import {
 const root = fileURLToPath(new URL(".", import.meta.url));
 const port = Number(process.env.PORT || 8081);
 const statePath = join(root, "data", "state.json");
+const supabaseUrl = process.env.SUPABASE_URL || "";
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const useSupabase = Boolean(supabaseUrl && supabaseServiceKey);
 const sessions = new Map();
 const loginAttempts = new Map();
 const initialPasswords = Object.fromEntries(DEFAULT_USERS.map((user) => [
@@ -53,12 +56,44 @@ function readState() {
 }
 
 let state = readState();
-function persist() {
+async function readSupabaseState() {
+  const response = await fetch(`${supabaseUrl}/rest/v1/app_state?id=eq.main&select=payload`, {
+    headers: { apikey: supabaseServiceKey, Authorization: `Bearer ${supabaseServiceKey}` },
+  });
+  if (!response.ok) throw new Error(`Supabase GET ${response.status}`);
+  const rows = await response.json();
+  return rows[0]?.payload || null;
+}
+
+async function persist() {
   state.users = state.users.map(({ password, ...user }) => user);
   writeFileSync(statePath, JSON.stringify(state, null, 2), "utf8");
+  if (!useSupabase) return;
+  const response = await fetch(`${supabaseUrl}/rest/v1/app_state`, {
+    method: "POST",
+    headers: {
+      apikey: supabaseServiceKey,
+      Authorization: `Bearer ${supabaseServiceKey}`,
+      "Content-Type": "application/json",
+      Prefer: "resolution=merge-duplicates,return=minimal",
+    },
+    body: JSON.stringify([{ id: "main", payload: state }]),
+  });
+  if (!response.ok) throw new Error(`Supabase UPSERT ${response.status}`);
 }
+
+if (useSupabase) {
+  try {
+    const remoteState = await readSupabaseState();
+    if (remoteState) state = remoteState;
+    else await persist();
+  } catch (error) {
+    console.error("No se pudo cargar Supabase; se usará el estado local:", error.message);
+  }
+}
+
 if (!existsSync(statePath)) {
-  persist();
+  await persist();
   console.log("Usuarios iniciales generados. Guarda estas credenciales en un lugar seguro:");
   DEFAULT_USERS.forEach((user) => console.log(`${user.role} ${user.username}: ${initialPasswords[user.username]}`));
 }
@@ -161,7 +196,7 @@ const server = createServer(async (request, response) => {
       if (!body || !Array.isArray(body.teams) || !Array.isArray(body.players) || !Array.isArray(body.matches)) return json(response, 400, { error: "Estado incompleto" });
       if (session.role === "PRESIDENT" && !presidentStateIsAllowed(body, session)) return json(response, 403, { error: "El presidente solo puede modificar operaciones de su equipo" });
       state = { ...state, ...body, users: state.users };
-      persist();
+      await persist();
       return json(response, 200, publicState());
     }
     serveStatic(request, response);

@@ -177,6 +177,8 @@ El archivo `render.yaml` deja preparado el despliegue del frontend y backend com
 3. Elige el repositorio `inigazo31-rgb/kings-league-imex-app`.
 4. Render leerá `render.yaml` y creará el servicio.
 5. Define las variables `IMEX_PASSWORD_...` cuando Render las solicite.
-6. Pulsa **Apply** y espera a que termine el despliegue.
+6. En Supabase abre **SQL Editor**, pega el contenido de `supabase-schema.sql` y pulsa **Run**.
+7. En Render define `SUPABASE_SERVICE_ROLE_KEY` con la clave **secret/service_role** de Supabase. Esta clave se guarda únicamente en Render y nunca se sube a GitHub.
+8. Pulsa **Apply** y espera a que termine el despliegue.
 
-Render entregará una URL como `https://kings-league-imex.onrender.com`. Esa será la dirección pública para organizador, presidentes y visitantes. El servicio usa un disco persistente para conservar `data/state.json`; no publiques ese archivo ni las contraseñas.
+Render entregará una URL como `https://kings-league-imex.onrender.com`. Esa será la dirección pública para organizador, presidentes y visitantes. Supabase conservará el estado central del torneo; no publiques las claves privadas ni `data/state.json`.

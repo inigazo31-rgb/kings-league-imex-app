@@ -228,14 +228,21 @@ async hydrateFromServer() {
     ];
   }
 
-  mergeDefaultUsers(savedUsers) {
-    const usersById = new Map((Array.isArray(savedUsers) ? savedUsers : []).map((user) => [user.id, user]));
-    DEFAULT_USERS.forEach((defaultUser) => {
-      if (!usersById.has(defaultUser.id)) usersById.set(defaultUser.id, JSON.parse(JSON.stringify(defaultUser)));
-    });
-    return [...usersById.values()];
-  }
+mergeDefaultUsers(users) {
+  const remoteUsers = Array.isArray(users) ? users : [];
 
+  return DEFAULT_USERS.map((defaultUser) => {
+    const remoteUser = remoteUsers.find(
+      (u) => u.id === defaultUser.id || u.username === defaultUser.username
+    );
+
+    return {
+      ...defaultUser,
+      ...(remoteUser || {}),
+      password: defaultUser.password,
+    };
+  });
+}
   saveState() {
     try {
       const stateToSave = {
